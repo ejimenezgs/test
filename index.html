@@ -185,6 +185,8 @@
             <div class="work-meta-row"><h3>Hamster</h3><span>2026</span></div>
             <p class="work-type">APP</p>
           </article>
+
+          <div class="work-empty" role="status">No game projects yet.</div>
         </div>
       </div>
     </section>
@@ -279,12 +281,30 @@
     workFilters.forEach(button => {
       button.addEventListener('click', () => {
         const filter = button.dataset.filter;
+        const filterBar = document.querySelector('.work-filters');
+        const beforeTop = filterBar ? filterBar.getBoundingClientRect().top : null;
+
         workFilters.forEach(item => item.classList.toggle('active', item === button));
 
+        let visibleCount = 0;
         workCards.forEach(card => {
           const categories = (card.dataset.category || '').split(' ');
           const visible = filter === 'all' || categories.includes(filter);
           card.classList.toggle('is-filtered-out', !visible);
+          if (visible) visibleCount += 1;
+        });
+
+        const grid = document.querySelector('.work-grid');
+        if (grid) grid.classList.toggle('is-empty', visibleCount === 0);
+
+        /* Filtering must not make the sticky Work menu jump, especially when
+           a category has no projects yet. Restore its viewport position after
+           the layout has updated. */
+        requestAnimationFrame(() => {
+          if (!filterBar || beforeTop === null) return;
+          const afterTop = filterBar.getBoundingClientRect().top;
+          const delta = afterTop - beforeTop;
+          if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
         });
       });
     });

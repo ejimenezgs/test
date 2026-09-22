@@ -898,3 +898,70 @@ h1 {
     height: 18px;
   }
 }
+
+/* v11 — mobile scale + About vertical centering + stable Work filters */
+@media (max-width: 760px) {
+  /* Primary navbar: 50% larger than the previous mobile size. */
+  .nav-link {
+    font-size: 10.5px;
+  }
+
+  /* About: keep the copy optically centered in the lower half. */
+  .intro {
+    justify-content: center;
+    padding: 24px 18px 62px;
+  }
+
+  /* Global mobile type scale: approximately +30%. */
+  h1 { font-size: 23.4px; }
+  .role { font-size: 13px; }
+  .statement { font-size: 14.3px; max-width: 330px; }
+  .location { font-size: 11.7px; }
+  .scroll-cue { font-size: 9.1px; }
+
+  .resume-title { font-size: 31.2px; }
+  .resume-subnav a { font-size: 9.1px; }
+  .resume-section h3 { font-size: 20.8px; }
+  .resume-date { font-size: 9.1px; }
+  .resume-meta { font-size: 7.8px; }
+  .resume-item-copy h4,
+  .skill-item h4 { font-size: 11.7px; }
+  .resume-item-copy p,
+  .skill-item p { font-size: 9.1px; }
+  .skill-num { font-size: 9.1px; }
+  .tool-label { font-size: 7.8px; }
+  .tool-pills span { font-size: 7.8px; }
+
+  .work-title { font-size: 31.2px; }
+  .work-filter { font-size: 9.1px; }
+  .work-meta-row h3 { font-size: 14.3px; }
+  .work-meta-row span,
+  .work-type { font-size: 9.1px; }
+
+  /* Keep the Work area tall enough so an empty filter never collapses the section. */
+  .work-grid {
+    min-height: 58svh;
+    align-content: start;
+  }
+}
+
+.work-empty {
+  display: none;
+  min-height: 52svh;
+  align-items: center;
+  justify-content: center;
+  color: #9a9a9f;
+  font-size: 12px;
+  text-align: center;
+}
+
+.work-grid.is-empty .work-empty {
+  display: flex;
+}
+
+@media (max-width: 760px) {
+  .work-empty {
+    min-height: 54svh;
+    font-size: 10.4px;
+  }
+}
