@@ -223,12 +223,21 @@
 
       const headerHeight = document.querySelector('.global-header')?.offsetHeight || 0;
       const subnavHeight = document.querySelector('.resume-subnav')?.offsetHeight || 0;
-      const marker = window.scrollY + headerHeight + subnavHeight + 34;
       let current = resumeSections[0].id;
 
-      resumeSections.forEach(section => {
-        if (section.offsetTop <= marker) current = section.id;
-      });
+      if (window.matchMedia('(max-width: 760px)').matches) {
+        // Mobile: all Resume blocks stay visible. Track the block that has
+        // actually reached the sticky navigation instead of using document offsets.
+        const activationLine = headerHeight + subnavHeight + 28;
+        resumeSections.forEach(section => {
+          if (section.getBoundingClientRect().top <= activationLine) current = section.id;
+        });
+      } else {
+        const marker = window.scrollY + headerHeight + subnavHeight + 34;
+        resumeSections.forEach(section => {
+          if (section.offsetTop <= marker) current = section.id;
+        });
+      }
 
       resumeLinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === '#' + current);
@@ -246,6 +255,15 @@
 
     function updateResumeSectionVisibility() {
       if (!resumeSections.length) return;
+
+      // On mobile the Resume behaves as one continuous document: Education,
+      // Experience, Skills and Tools remain visible together while scrolling.
+      if (window.matchMedia('(max-width: 760px)').matches) {
+        resumeSections.forEach(section => {
+          section.classList.remove('is-section-active', 'is-section-past', 'is-section-future');
+        });
+        return;
+      }
 
       const headerHeight = document.querySelector('.global-header')?.offsetHeight || 0;
       const subnavHeight = document.querySelector('.resume-subnav')?.offsetHeight || 0;

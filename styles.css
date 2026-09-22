@@ -965,3 +965,59 @@ h1 {
     font-size: 10.4px;
   }
 }
+
+/* v12 — mobile Resume continuity + subnav parity */
+@media (max-width: 760px) {
+  /* Resume and Work controls use the same type scale as the primary navbar. */
+  .resume-subnav,
+  .work-filters {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .resume-subnav a,
+  .work-filter {
+    font-size: 10.5px;
+    line-height: 1;
+  }
+
+  /* Keep the active-state rule clearly visible on the sticky divider. */
+  .resume-subnav a.active::after {
+    bottom: -12px;
+    height: 1px;
+    background: var(--text);
+  }
+
+  .work-filter.active::after {
+    bottom: -14px;
+    height: 1px;
+    background: var(--text);
+  }
+
+  /* Mobile Resume is one continuous block: never fade previous/next sections out. */
+  .resume-section,
+  .resume-section.is-section-active,
+  .resume-section.is-section-past,
+  .resume-section.is-section-future {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .resume-item,
+  .skill-item,
+  .tool-group,
+  .resume-section.is-section-active .resume-item,
+  .resume-section.is-section-active .skill-item,
+  .resume-section.is-section-active .tool-group {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Align anchor targets with the two stacked sticky bars. */
+  .resume-section {
+    scroll-margin-top: calc(var(--header-h) + 68px);
+  }
+}
