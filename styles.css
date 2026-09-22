@@ -1111,3 +1111,37 @@ h1 {
     transition: none !important;
   }
 }
+
+/* v15 — mobile Resume entrance timing + divider reveal */
+@media (max-width: 760px) {
+  /* Start the Resume chrome as soon as the section begins entering the viewport,
+     instead of waiting for the global active-section threshold. */
+  .resume-title,
+  .resume-subnav {
+    transition-duration: .30s;
+  }
+
+  .resume-page.is-entering .resume-title,
+  .resume-page.is-entering .resume-subnav,
+  .resume-page.is-page-active .resume-title,
+  .resume-page.is-page-active .resume-subnav {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Section divider lines belong to the reveal too. Keep them hidden until
+     that section has actually started appearing. */
+  .resume-page .resume-section {
+    border-bottom-color: transparent;
+    transition: border-color .28s ease !important;
+  }
+
+  .resume-page .resume-section.has-entered {
+    border-bottom-color: #e4e4e4;
+  }
+
+  .resume-page .resume-section.tools-section,
+  .resume-page .resume-section.tools-section.has-entered {
+    border-bottom-color: transparent;
+  }
+}

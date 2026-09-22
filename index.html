@@ -298,8 +298,9 @@
       resumePage.classList.toggle('is-page-active', isResume);
 
       if (window.matchMedia('(max-width: 760px)').matches) {
-        if (!isResume) {
+        if (!isResume && !resumePage.classList.contains('is-entering')) {
           mobileResumeRevealTargets.forEach(el => el.classList.remove('is-scroll-visible'));
+          resumeSections.forEach(section => section.classList.remove('has-entered'));
         } else if (lastPageId !== 'resume') {
           // Reveal anything already in view as Resume becomes the active block.
           requestAnimationFrame(() => {
@@ -331,16 +332,33 @@
     window.addEventListener('resize', updateNavigationState);
     window.addEventListener('load', updateNavigationState);
 
+    const resumePage = document.getElementById('resume');
+
+    // Mobile-only early entrance cue: the Resume title/menu should begin revealing
+    // as the block itself enters the viewport, without waiting for the global nav
+    // to switch from ABOUT to RESUME.
+    const resumeEntranceObserver = new IntersectionObserver(entries => {
+      if (!window.matchMedia('(max-width: 760px)').matches || !resumePage) return;
+      entries.forEach(entry => {
+        resumePage.classList.toggle('is-entering', entry.isIntersecting);
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -12% 0px' });
+
+    if (resumePage) resumeEntranceObserver.observe(resumePage);
+
     const mobileResumeObserver = new IntersectionObserver(entries => {
       if (!window.matchMedia('(max-width: 760px)').matches) return;
-      if (getCurrentPageId() !== 'resume') return;
+      if (!resumePage || (!resumePage.classList.contains('is-entering') && getCurrentPageId() !== 'resume')) return;
 
       entries.forEach(entry => {
         // Mobile Resume is cumulative: once an item appears it stays visible
         // until the user leaves Resume for About or Work.
-        if (entry.isIntersecting) entry.target.classList.add('is-scroll-visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-scroll-visible');
+          entry.target.closest('.resume-section')?.classList.add('has-entered');
+        }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
 
     mobileResumeRevealTargets.forEach(el => mobileResumeObserver.observe(el));
 
