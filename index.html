@@ -199,7 +199,7 @@
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
-    function setActiveGlobalNav() {
+    function getCurrentPageId() {
       const headerHeight = document.querySelector('.global-header')?.offsetHeight || 0;
       const marker = window.scrollY + headerHeight + 24;
       let current = pageSections[0]?.id || 'about';
@@ -208,9 +208,15 @@
         if (section.offsetTop <= marker) current = section.id;
       });
 
+      return current;
+    }
+
+    function setActiveGlobalNav() {
+      const current = getCurrentPageId();
       navLinks.forEach(link => {
         link.classList.toggle('active', link.dataset.target === current);
       });
+      return current;
     }
 
     const resumeLinks = [...document.querySelectorAll('.resume-subnav a')];
@@ -281,17 +287,63 @@
       });
     }
 
+    let lastPageId = null;
+
+    function updateResumePageActivity() {
+      const current = getCurrentPageId();
+      const resumePage = document.getElementById('resume');
+      if (!resumePage) return;
+
+      const isResume = current === 'resume';
+      resumePage.classList.toggle('is-page-active', isResume);
+
+      if (window.matchMedia('(max-width: 760px)').matches) {
+        if (!isResume) {
+          mobileResumeRevealTargets.forEach(el => el.classList.remove('is-scroll-visible'));
+        } else if (lastPageId !== 'resume') {
+          // Reveal anything already in view as Resume becomes the active block.
+          requestAnimationFrame(() => {
+            mobileResumeRevealTargets.forEach(el => {
+              const rect = el.getBoundingClientRect();
+              const visible = rect.bottom > 0 && rect.top < window.innerHeight * 0.92;
+              if (visible) el.classList.add('is-scroll-visible');
+            });
+          });
+        }
+      }
+
+      lastPageId = current;
+    }
+
     function updateNavigationState() {
       setActiveGlobalNav();
       setActiveResumeNav();
       updateHeaderSurface();
       updateResumeSectionVisibility();
+      updateResumePageActivity();
     }
 
     window.addEventListener('scroll', updateNavigationState, { passive: true });
     window.addEventListener('resize', updateNavigationState);
     window.addEventListener('load', updateNavigationState);
     updateNavigationState();
+
+    const mobileResumeRevealTargets = [...document.querySelectorAll(
+      '.resume-section h3, .resume-item, .skill-item, .tool-group'
+    )];
+
+    const mobileResumeObserver = new IntersectionObserver(entries => {
+      if (!window.matchMedia('(max-width: 760px)').matches) return;
+      if (getCurrentPageId() !== 'resume') return;
+
+      entries.forEach(entry => {
+        // Mobile Resume is cumulative: once an item appears it stays visible
+        // until the user leaves Resume for About or Work.
+        if (entry.isIntersecting) entry.target.classList.add('is-scroll-visible');
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    mobileResumeRevealTargets.forEach(el => mobileResumeObserver.observe(el));
 
     const workFilters = [...document.querySelectorAll('.work-filter')];
     const workCards = [...document.querySelectorAll('.work-card')];

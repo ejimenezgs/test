@@ -1021,3 +1021,93 @@ h1 {
     scroll-margin-top: calc(var(--header-h) + 68px);
   }
 }
+
+/* v13 — Resume entry reveal + cumulative mobile reveals */
+
+/* Resume heading and local navigation now participate in the page entrance. */
+.resume-title,
+.resume-subnav {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .46s cubic-bezier(.2,.7,.2,1), transform .46s cubic-bezier(.2,.7,.2,1);
+}
+
+.resume-page.is-page-active .resume-title,
+.resume-page.is-page-active .resume-subnav {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* When Resume is not the active top-level block, reset its visual state so
+   the entrance animation can play again when returning from About or Work. */
+.resume-page:not(.is-page-active) .resume-section {
+  opacity: 0;
+}
+
+@media (max-width: 760px) {
+  /* Restore the cleaner pre-v12 mobile submenu rhythm. */
+  .resume-subnav,
+  .work-filters {
+    justify-content: flex-start;
+    gap: 27px;
+  }
+
+  .resume-subnav a,
+  .work-filter {
+    font-size: 9.1px;
+  }
+
+  /* Keep the underline behavior from the original compact menus. */
+  .resume-subnav a.active::after { bottom: -12px; }
+  .work-filter.active::after { bottom: -14px; }
+
+  /* The Resume document stays laid out as one continuous list on mobile. */
+  .resume-page.is-page-active .resume-section,
+  .resume-page.is-page-active .resume-section.is-section-active,
+  .resume-page.is-page-active .resume-section.is-section-past,
+  .resume-page.is-page-active .resume-section.is-section-future {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Section labels and content reveal progressively as they enter the viewport. */
+  .resume-page .resume-section h3,
+  .resume-page .resume-item,
+  .resume-page .skill-item,
+  .resume-page .tool-group {
+    opacity: 0 !important;
+    transform: translateY(18px) !important;
+    transition: opacity .44s cubic-bezier(.2,.7,.2,1), transform .44s cubic-bezier(.2,.7,.2,1) !important;
+  }
+
+  .resume-page.is-page-active .resume-section h3.is-scroll-visible,
+  .resume-page.is-page-active .resume-item.is-scroll-visible,
+  .resume-page.is-page-active .skill-item.is-scroll-visible,
+  .resume-page.is-page-active .tool-group.is-scroll-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Once shown, items remain visible while Resume is active; leaving the block
+     removes is-scroll-visible in JS so the next visit starts fresh. */
+  .resume-page:not(.is-page-active) .resume-section h3,
+  .resume-page:not(.is-page-active) .resume-item,
+  .resume-page:not(.is-page-active) .skill-item,
+  .resume-page:not(.is-page-active) .tool-group {
+    opacity: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-title,
+  .resume-subnav,
+  .resume-page .resume-section h3,
+  .resume-page .resume-item,
+  .resume-page .skill-item,
+  .resume-page .tool-group {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
