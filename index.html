@@ -315,6 +315,10 @@
       lastPageId = current;
     }
 
+    const mobileResumeRevealTargets = [...document.querySelectorAll(
+      '.resume-section h3, .resume-item, .skill-item, .tool-group'
+    )];
+
     function updateNavigationState() {
       setActiveGlobalNav();
       setActiveResumeNav();
@@ -326,11 +330,6 @@
     window.addEventListener('scroll', updateNavigationState, { passive: true });
     window.addEventListener('resize', updateNavigationState);
     window.addEventListener('load', updateNavigationState);
-    updateNavigationState();
-
-    const mobileResumeRevealTargets = [...document.querySelectorAll(
-      '.resume-section h3, .resume-item, .skill-item, .tool-group'
-    )];
 
     const mobileResumeObserver = new IntersectionObserver(entries => {
       if (!window.matchMedia('(max-width: 760px)').matches) return;
@@ -386,6 +385,10 @@
     }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
 
     document.querySelectorAll('.work-page .reveal-block').forEach(el => revealObserver.observe(el));
+
+    // Run the initial state only after every reveal target and observer exists.
+    // This avoids a mobile-only initialization error that left Resume and Work hidden.
+    updateNavigationState();
   </script>
 </body>
 </html>
