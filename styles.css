@@ -1145,3 +1145,15 @@ h1 {
     border-bottom-color: transparent;
   }
 }
+
+
+/* v17 — desktop navbar alignment + solid-on-scroll behavior */
+@media (min-width: 761px) {
+  /* Align the brand with the same left edge used by the centered Resume content.
+     Resume has 6.5vw page padding and a 1040px max-width inner wrapper. */
+  .global-header,
+  .global-header.is-solid {
+    padding-left: calc(6.5vw + max(0px, (87vw - 1040px) / 2));
+    padding-right: 6.5vw;
+  }
+}

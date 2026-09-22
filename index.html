@@ -263,11 +263,12 @@
 
     function updateHeaderSurface() {
       const header = document.querySelector('.global-header');
-      const about = document.getElementById('about');
-      if (!header || !about) return;
+      if (!header) return;
 
-      const threshold = about.offsetTop + about.offsetHeight - header.offsetHeight;
-      header.classList.toggle('is-solid', window.scrollY >= threshold);
+      // The navbar is transparent only at the absolute top of the page.
+      // As soon as the user starts scrolling — even while still in About —
+      // it receives the solid white surface so content never shows through.
+      header.classList.toggle('is-solid', window.scrollY > 2);
     }
 
     function updateResumeSectionVisibility() {
