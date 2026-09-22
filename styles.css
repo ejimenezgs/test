@@ -1,0 +1,900 @@
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --text: #1E1E1E;
+  --muted: #8d8d92;
+  --line: #d8d8d8;
+  --placeholder: #d9d9d9;
+  --header-h: 64px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Global fixed navigation */
+.global-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 50%;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 34px;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color .22s ease, backdrop-filter .22s ease;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+}
+
+.nav-link {
+  position: relative;
+  padding-bottom: 6px;
+  color: #99999f;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+  transition: color .2s ease;
+}
+
+.nav-link.active { color: var(--text); }
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--text);
+}
+
+/* About */
+.about-page {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background: var(--surface);
+}
+
+.portrait-panel {
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #dff2f2;
+}
+
+.portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: var(--placeholder);
+  color: rgba(0,0,0,.24);
+  font-size: 11px;
+  letter-spacing: .2em;
+}
+
+.content-panel {
+  position: relative;
+  min-height: 100svh;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.intro {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--header-h) + 26px) 11% 52px;
+}
+
+.intro-copy { width: min(100%, 440px); }
+
+h1 {
+  margin: 0;
+  font-size: clamp(24px, 1.85vw, 35px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.role {
+  margin: 7px 0 0;
+  color: #858585;
+  font-size: clamp(16px, 1.2vw, 22px);
+  line-height: 1.2;
+  font-weight: 300;
+}
+
+.short-rule {
+  width: 36px;
+  height: 1px;
+  margin: 38px 0 31px;
+  background: #a8a8a8;
+}
+
+.statement {
+  max-width: 405px;
+  margin: 0;
+  font-size: clamp(15px, 1.18vw, 22px);
+  line-height: 1.38;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+
+.location {
+  margin: 21px 0 0;
+  color: #a2a2a2;
+  font-size: clamp(12px, .82vw, 15px);
+  line-height: 1.3;
+  font-weight: 300;
+}
+
+.scroll-cue {
+  position: absolute;
+  left: 11%;
+  bottom: 52px;
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  width: max-content;
+  color: #8f8f94;
+  font-size: 9px;
+  letter-spacing: .16em;
+}
+
+.arrow { color: #4a4a4a; font-size: 23px; font-weight: 300; line-height: 1; }
+
+/* Resume */
+.resume-page {
+  min-height: 100svh;
+  background: var(--surface);
+  padding: calc(var(--header-h) + 52px) 6.5vw 120px;
+}
+
+.resume-wrap {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+}
+
+.resume-title {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+.resume-subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  display: flex;
+  gap: 38px;
+  margin-top: 24px;
+  padding: 14px 0 15px;
+  border-bottom: 1px solid #e1e1e1;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.resume-subnav a {
+  position: relative;
+  color: #9a9a9a;
+  font-size: 9px;
+  font-weight: 400;
+}
+.resume-subnav a.active { color: var(--text); }
+.resume-subnav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -16px;
+  height: 1px;
+  background: var(--text);
+}
+
+.resume-section {
+  padding: 58px 0 50px;
+  border-bottom: 1px solid #e4e4e4;
+  scroll-margin-top: 126px;
+}
+
+.resume-section h3 {
+  margin: 0 0 30px;
+  font-size: 24px;
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.resume-item {
+  display: grid;
+  grid-template-columns: 120px 72px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: 0 0 34px;
+  margin-bottom: 34px;
+  border-bottom: 1px solid #ececec;
+}
+
+.resume-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.resume-date { color: #909095; font-size: 11px; line-height: 1.35; padding-top: 2px; }
+.resume-thumb, .skill-thumb { width: 72px; aspect-ratio: 1; background: #e2e2e2; }
+.resume-meta { color: #909095; font-size: 10px; margin-bottom: 5px; letter-spacing: .015em; }
+.resume-item-copy h4, .skill-item h4 { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.25; }
+.resume-item-copy p, .skill-item p {
+  margin: 10px 0 0;
+  color: #85858a;
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: 650px;
+}
+
+.skill-list { display: grid; }
+.skill-item {
+  display: grid;
+  grid-template-columns: 36px 58px minmax(0,1fr);
+  gap: 24px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid #ececec;
+}
+.skill-item:first-child { padding-top: 0; }
+.skill-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.skill-num { color: #99999f; font-size: 10px; }
+.skill-thumb { width: 58px; }
+.skill-item p { margin-top: 6px; }
+
+.tools-section { border-bottom: 0; padding-bottom: 0; }
+.tool-group {
+  display: grid;
+  grid-template-columns: 145px minmax(0,1fr);
+  gap: 26px;
+  align-items: start;
+  padding: 20px 0;
+  border-bottom: 1px solid #ececec;
+}
+.tool-group:last-child { border-bottom: 0; }
+.tool-label { color: #9a9a9f; font-size: 9px; padding-top: 8px; letter-spacing: .03em; }
+.tool-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.tool-pills span {
+  background: #f0f0f0;
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.future-block { min-height: 1px; }
+
+@media (max-width: 760px) {
+  :root { --header-h: 50px; }
+  html { scroll-padding-top: 92px; }
+
+  .global-header {
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: var(--header-h);
+    padding: 0 14px;
+    background: rgba(255,255,255,.97);
+  }
+
+  .main-nav { width: auto; gap: 23px; }
+  .nav-link { font-size: 7px; padding-bottom: 3px; }
+
+  .about-page {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--header-h);
+  }
+  .content-panel { display: contents; }
+  .portrait-panel { order: 1; width: 100%; min-height: auto; height: 54svh; }
+  .portrait-placeholder { min-height: 0; height: 100%; }
+  .intro {
+    order: 2;
+    position: relative;
+    min-height: calc(46svh - 50px);
+    padding: 22px 18px 58px;
+    justify-content: flex-start;
+    background: var(--surface);
+  }
+  .intro-copy { width: 100%; }
+  h1 { font-size: 18px; line-height: 1.05; letter-spacing: -0.025em; }
+  .role { margin-top: 2px; font-size: 10px; }
+  .short-rule { width: 28px; margin: 18px 0 16px; }
+  .statement { max-width: 255px; font-size: 11px; line-height: 1.45; }
+  .location { margin-top: 15px; font-size: 9px; }
+  .scroll-cue { left: 18px; bottom: 19px; gap: 10px; font-size: 7px; }
+  .arrow { font-size: 18px; }
+
+  .resume-page {
+    padding: calc(var(--header-h) + 22px) 18px 64px;
+  }
+  .resume-wrap { margin: 0; width: 100%; }
+  .resume-title { font-size: 24px; }
+  .resume-subnav {
+    top: var(--header-h);
+    gap: 23px;
+    margin-top: 10px;
+    padding: 10px 0 11px;
+  }
+  .resume-subnav a { font-size: 7px; }
+  .resume-subnav a.active::after { bottom: -12px; }
+
+  .resume-section {
+    padding: 31px 0 28px;
+    scroll-margin-top: 96px;
+  }
+  .resume-section h3 { font-size: 16px; margin-bottom: 21px; }
+  .resume-item {
+    grid-template-columns: 54px 44px minmax(0,1fr);
+    gap: 14px;
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+  .resume-date { font-size: 7px; padding-top: 1px; }
+  .resume-thumb { width: 44px; }
+  .resume-meta { font-size: 6px; margin-bottom: 3px; }
+  .resume-item-copy h4, .skill-item h4 { font-size: 9px; }
+  .resume-item-copy p, .skill-item p { font-size: 7px; line-height: 1.45; margin-top: 7px; }
+
+  .skill-item {
+    grid-template-columns: 22px 40px minmax(0,1fr);
+    gap: 12px;
+    padding: 15px 0;
+  }
+  .skill-num { font-size: 7px; }
+  .skill-thumb { width: 40px; }
+
+  .tool-group { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+  .tool-label { font-size: 6px; padding-top: 0; }
+  .tool-pills { gap: 7px; }
+  .tool-pills span { padding: 5px 10px; font-size: 6px; }
+}
+
+/* v5 navigation refinements */
+.resume-subnav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  height: 24px;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+.resume-section {
+  scroll-margin-top: 150px;
+}
+
+@media (max-width: 760px) {
+  .resume-subnav::after {
+    bottom: -18px;
+    height: 18px;
+  }
+
+  .resume-section {
+    scroll-margin-top: 118px;
+  }
+}
+
+
+/* v6: solid global nav after leaving About */
+.global-header.is-solid {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 0 rgba(30,30,30,.04);
+}
+
+@media (max-width: 760px) {
+  .global-header.is-solid {
+    background: #ffffff;
+  }
+}
+
+/* v7: full-width solid navbar after About */
+.global-header.is-solid {
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 0 rgba(30,30,30,.05);
+}
+
+/* Scroll reveal system */
+.resume-section {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .48s cubic-bezier(.2,.7,.2,1), transform .48s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+
+.resume-section.is-section-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resume-section.is-section-past,
+.resume-section.is-section-future {
+  opacity: 0;
+}
+
+.resume-section.is-section-past {
+  transform: translateY(-18px);
+}
+
+.resume-section.is-section-future {
+  transform: translateY(26px);
+}
+
+.resume-item,
+.skill-item,
+.tool-group {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .42s ease, transform .42s ease;
+}
+
+.resume-section.is-section-active .resume-item,
+.resume-section.is-section-active .skill-item,
+.resume-section.is-section-active .tool-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resume-section.is-section-active .resume-item:nth-of-type(1),
+.resume-section.is-section-active .skill-item:nth-child(1),
+.resume-section.is-section-active .tool-group:nth-of-type(1) { transition-delay: .04s; }
+.resume-section.is-section-active .resume-item:nth-of-type(2),
+.resume-section.is-section-active .skill-item:nth-child(2),
+.resume-section.is-section-active .tool-group:nth-of-type(2) { transition-delay: .10s; }
+.resume-section.is-section-active .resume-item:nth-of-type(3),
+.resume-section.is-section-active .skill-item:nth-child(3),
+.resume-section.is-section-active .tool-group:nth-of-type(3) { transition-delay: .16s; }
+.resume-section.is-section-active .skill-item:nth-child(4) { transition-delay: .22s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-section,
+  .resume-item,
+  .skill-item,
+  .tool-group {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* v8: desktop brand + Work */
+.global-header {
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: none;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.global-header.is-solid .nav-brand {
+  display: block;
+}
+
+/* Keep the brand visible on desktop while About is active too. */
+@media (min-width: 761px) {
+  .global-header {
+    left: 50%;
+    right: 0;
+    width: 50%;
+  }
+
+  .global-header .nav-brand {
+    display: none;
+  }
+
+  .global-header.is-solid {
+    left: 0;
+    width: 100%;
+    padding-left: 6.5vw;
+    padding-right: 6.5vw;
+  }
+
+  .global-header.is-solid .nav-brand {
+    display: block;
+  }
+
+  /* Show name at the left edge of the viewport on desktop About without
+     changing the approved 50/50 visual split. */
+  .about-page::before {
+    content: "EDUARDO JIMENEZ";
+    position: absolute;
+    top: 27px;
+    left: 6.5vw;
+    z-index: 900;
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    pointer-events: none;
+  }
+  .about-page { position: relative; }
+}
+
+.work-page {
+  min-height: 100svh;
+  background: var(--surface);
+  padding: calc(var(--header-h) + 54px) 6.5vw 120px;
+}
+
+.work-wrap {
+  width: min(1320px, 100%);
+  margin: 0 auto;
+}
+
+.work-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 34px;
+}
+
+.work-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.work-filters {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.work-filter {
+  appearance: none;
+  border: 0;
+  padding: 0 0 6px;
+  background: transparent;
+  color: #9a9a9f;
+  font: inherit;
+  font-size: 9px;
+  line-height: 1;
+  cursor: pointer;
+  position: relative;
+}
+
+.work-filter.active { color: var(--text); }
+.work-filter.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--text);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 44px 28px;
+}
+
+.work-card {
+  min-width: 0;
+  transition: opacity .32s ease, transform .32s ease;
+}
+
+.work-card.is-filtered-out {
+  display: none;
+}
+
+.work-visual {
+  width: 100%;
+  aspect-ratio: 1.75 / 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.work-visual-light { background: #f3f2f0; }
+.work-visual-warm { background: #f4f1eb; }
+.work-visual-soft { background: #f5f4f8; }
+.work-visual-dark { background: #171717; color: #fff; }
+.work-visual-nautica { background: #0c3554; color: #fff; }
+
+.work-meta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.work-meta-row h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.work-meta-row span,
+.work-type {
+  color: #98989d;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.work-meta-row span { flex: 0 0 auto; }
+.work-type { margin: 6px 0 0; }
+
+.logo-word,
+.logo-drk,
+.logo-hamster,
+.logo-hacker,
+.logo-oaxsun,
+.logo-casa,
+.logo-nautica,
+.logo-jay,
+.logo-mmyt {
+  color: inherit;
+  text-align: center;
+}
+
+.logo-womo { font-size: clamp(34px, 4.2vw, 58px); font-weight: 700; letter-spacing: -0.06em; }
+.logo-casa { font-family: Georgia, "Times New Roman", serif; font-size: clamp(23px, 2.4vw, 38px); letter-spacing: .14em; }
+.logo-casa small, .logo-nautica small, .logo-oaxsun small, .logo-jay small { display: block; margin-top: 9px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 7px; font-weight: 400; letter-spacing: .38em; }
+.logo-nautica { font-size: clamp(20px, 2.2vw, 34px); font-weight: 300; letter-spacing: .02em; }
+.logo-nautica .sail { display: block; margin-bottom: 5px; font-size: 27px; transform: rotate(-9deg); }
+.logo-hacker { font-size: clamp(17px, 1.8vw, 29px); font-weight: 300; }
+.logo-hacker strong { font-weight: 700; }
+.logo-oaxsun { font-size: clamp(18px, 2vw, 31px); font-weight: 200; letter-spacing: .28em; }
+.logo-drk { color: var(--text); font-size: clamp(24px, 2.6vw, 40px); font-weight: 800; letter-spacing: -.07em; }
+.logo-jay { color: var(--text); }
+.logo-jay > span { display: block; font-family: Georgia, serif; font-size: 42px; line-height: .85; }
+.logo-jay small { margin-top: 12px; }
+.logo-hamster { color: var(--text); font-family: Georgia, serif; font-size: clamp(28px, 3vw, 46px); }
+.logo-mmyt { display: flex; align-items: center; gap: 18px; color: var(--text); font-size: clamp(14px, 1.2vw, 18px); font-weight: 600; line-height: 1.05; text-align: left; }
+.logo-mmyt .mmyt-mark { font-size: clamp(20px, 2.5vw, 36px); font-weight: 300; letter-spacing: -.08em; }
+
+/* Work scroll reveal */
+.work-page .reveal-block {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.work-page .reveal-block.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.work-grid .work-card:nth-child(3n + 2) { transition-delay: .06s; }
+.work-grid .work-card:nth-child(3n + 3) { transition-delay: .12s; }
+
+@media (max-width: 760px) {
+  .global-header { justify-content: flex-end; }
+  .nav-brand { display: none !important; }
+
+  .work-page {
+    padding: calc(var(--header-h) + 24px) 18px 70px;
+  }
+
+  .work-heading {
+    display: block;
+    margin-bottom: 25px;
+  }
+
+  .work-title { font-size: 24px; }
+
+  .work-filters {
+    gap: 27px;
+    margin-top: 16px;
+  }
+
+  .work-filter { font-size: 7px; padding-bottom: 4px; }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .work-visual {
+    aspect-ratio: 1.58 / 1;
+    min-height: 172px;
+  }
+
+  .work-meta-row { margin-top: 9px; }
+  .work-meta-row h3 { font-size: 11px; }
+  .work-meta-row span, .work-type { font-size: 7px; }
+  .work-type { margin-top: 4px; }
+
+  .logo-womo { font-size: 42px; }
+  .logo-casa { font-size: 25px; }
+  .logo-nautica { font-size: 24px; }
+  .logo-hacker { font-size: 21px; }
+  .logo-oaxsun { font-size: 21px; }
+  .logo-drk { font-size: 30px; }
+  .logo-hamster { font-size: 34px; }
+  .logo-mmyt { font-size: 13px; gap: 14px; }
+  .logo-mmyt .mmyt-mark { font-size: 27px; }
+
+  .work-grid .work-card { transition-delay: 0s !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-page .reveal-block {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* v9 — Work navigation matches Resume */
+.work-heading {
+  display: block;
+  margin-bottom: 0;
+}
+
+.work-filters {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 0 15px;
+  border-bottom: 1px solid #e1e1e1;
+  background: #fff;
+}
+
+.work-filter {
+  padding: 0;
+  color: #9a9a9a;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.work-filter.active::after {
+  bottom: -16px;
+}
+
+.work-grid {
+  margin-top: 42px;
+}
+
+@media (max-width: 760px) {
+  .work-heading {
+    margin-bottom: 0;
+  }
+
+  .work-filters {
+    gap: 27px;
+    margin-top: 16px;
+    padding: 12px 0 13px;
+  }
+
+  .work-filter {
+    font-size: 7px;
+    padding: 0;
+  }
+
+  .work-filter.active::after {
+    bottom: -14px;
+  }
+
+  .work-grid {
+    margin-top: 25px;
+  }
+}
+
+/* v10 — fixed global nav position + Work sticky subnav */
+@media (min-width: 761px) {
+  /* Keep the header in exactly the same place on every section. */
+  .global-header,
+  .global-header.is-solid {
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding-left: 6.5vw;
+    padding-right: 6.5vw;
+  }
+
+  /* About uses the same navbar geometry as Resume, only transparent. */
+  .global-header {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .global-header .nav-brand,
+  .global-header.is-solid .nav-brand {
+    display: block;
+  }
+
+  /* Brand now lives in the real navbar, so remove the old duplicate. */
+  .about-page::before {
+    content: none;
+  }
+}
+
+/* Once About is passed, only the surface changes — not the position. */
+.global-header.is-solid {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 0 rgba(30,30,30,.05);
+}
+
+/* Work filter bar remains fixed beneath the main navbar for the full Work block. */
+.work-filters {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 30;
+  background: #ffffff;
+}
+
+.work-filters::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  height: 24px;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+.work-grid {
+  margin-top: 42px;
+}
+
+@media (max-width: 760px) {
+  .work-filters::after {
+    bottom: -18px;
+    height: 18px;
+  }
+}
