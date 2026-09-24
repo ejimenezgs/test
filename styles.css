@@ -248,6 +248,8 @@ h1 {
 .resume-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
 .resume-date { color: #909095; font-size: 11px; line-height: 1.35; padding-top: 2px; }
 .resume-thumb, .skill-thumb { width: 72px; aspect-ratio: 1; background: #e2e2e2; }
+.resume-thumb.resume-logo { background: transparent; display: flex; align-items: center; justify-content: center; }
+.resume-thumb.resume-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .resume-meta { color: #909095; font-size: 10px; margin-bottom: 5px; letter-spacing: .015em; }
 .resume-item-copy h4, .skill-item h4 { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.25; }
 .resume-item-copy p, .skill-item p {
@@ -1474,4 +1476,268 @@ h1 {
     transform: none !important;
     transition: none !important;
   }
+}
+
+/* v21 — desktop contact form refinement */
+@media (min-width: 761px) {
+  .contact-wrap {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+    column-gap: clamp(64px, 7vw, 120px);
+  }
+
+  .contact-form {
+    width: 70%;
+    min-width: 320px;
+    justify-self: start;
+    padding-top: 34px;
+  }
+
+  .contact-field {
+    margin-bottom: 31px;
+  }
+
+  .contact-field > span {
+    margin-bottom: 11px;
+    font-size: 9px;
+  }
+
+  .contact-field input,
+  .contact-field textarea {
+    padding-bottom: 13px;
+    font-size: 14px;
+  }
+
+  .contact-field textarea {
+    min-height: 92px;
+  }
+
+  .contact-submit {
+    height: 42px;
+    padding: 0 20px;
+    font-size: 9px;
+  }
+
+  .contact-submit-arrow {
+    font-size: 17px;
+  }
+
+  .contact-status {
+    font-size: 9px;
+  }
+}
+
+/* Knowledge & Skills icons — Font Awesome 5.10.2, matching the previous portfolio */
+.skill-thumb {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1E1E1E;
+}
+.skill-thumb i {
+  font-size: 30px;
+  line-height: 1;
+}
+@media (max-width: 720px) {
+  .skill-thumb i { font-size: 22px; }
+}
+
+/* v25: match Education / Experience icon size to Knowledge & Skills */
+.resume-thumb {
+  width: 58px;
+}
+
+@media (max-width: 760px) {
+  .resume-thumb {
+    width: 40px;
+  }
+}
+
+
+/* v27: Education / Experience isotipos with stronger visual presence */
+.resume-thumb.resume-logo {
+  width: 58px;
+  height: 58px;
+}
+.resume-thumb.resume-logo img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+@media (max-width: 760px) {
+  .resume-thumb.resume-logo {
+    width: 40px;
+    height: 40px;
+  }
+  .resume-thumb.resume-logo img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* v28 — warm editorial orange direction */
+:root {
+  --accent: #D97757;
+  --resume-warm: #F7F5F2;
+}
+
+/* Keep the portfolio neutral; introduce orange as a controlled accent. */
+.resume-subnav a.active { color: var(--text); }
+.resume-subnav a.active::after { background: var(--accent); height: 2px; }
+
+/* Subtle section rhythm without card UI. */
+#experience {
+  position: relative;
+}
+#experience::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  background: var(--resume-warm);
+}
+
+/* Generic skill iconography carries the accent; brand marks keep their identity. */
+.skill-thumb { color: var(--accent); }
+.skill-num { color: var(--accent); }
+
+/* Small editorial accent beside Resume section titles. */
+.resume-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.resume-section h3::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  flex: 0 0 18px;
+  background: var(--accent);
+}
+
+/* Warm the supporting UI very slightly. */
+.tool-pills span { background: var(--resume-warm); }
+
+@media (max-width: 760px) {
+  .resume-section h3 { gap: 9px; }
+  .resume-section h3::before { width: 14px; flex-basis: 14px; }
+}
+
+
+/* v29 — accent refinements across navigation, Resume, Contact and hero */
+/* Keep all Resume sections on the same surface; no tinted Experience band. */
+#experience::before { display: none; }
+
+/* Resume editorial accents: dates + role/degree title. */
+#education .resume-date,
+#experience .resume-date,
+#education .resume-item-copy h4,
+#experience .resume-item-copy h4 {
+  color: var(--accent);
+}
+
+/* Primary and Work navigation use the same orange selection rule as Resume. */
+.nav-link.active::after,
+.work-filter.active::after {
+  background: var(--accent);
+  height: 2px;
+}
+
+/* Contact actions carry the accent. */
+.contact-submit {
+  background: var(--accent);
+}
+.contact-links a {
+  color: var(--accent);
+}
+.contact-links a::after {
+  background: var(--accent);
+}
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: var(--accent);
+}
+
+/* Hero scroll indicator: animated vertical line instead of arrow. */
+.scroll-cue {
+  gap: 11px;
+}
+.scroll-line {
+  position: relative;
+  display: inline-block;
+  width: 1px;
+  height: 34px;
+  overflow: hidden;
+  background: rgba(30,30,30,.18);
+  flex: 0 0 1px;
+}
+.scroll-line > span {
+  position: absolute;
+  top: -45%;
+  left: 0;
+  width: 1px;
+  height: 45%;
+  background: var(--accent);
+  animation: scrollLineTravel 1.55s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes scrollLineTravel {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(320%); opacity: 0; }
+}
+
+@media (max-width: 760px) {
+  .scroll-line { height: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-line > span {
+    animation: none;
+    top: 0;
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+
+/* v30 — accent balance + real Work artwork */
+/* Keep role/degree titles neutral; dates remain accented. */
+#education .resume-item-copy h4,
+#experience .resume-item-copy h4 {
+  color: var(--text);
+}
+#education .resume-date,
+#experience .resume-date {
+  color: var(--accent);
+}
+
+/* Contact: black primary action, neutral hint text. */
+.contact-submit {
+  background: #1E1E1E;
+}
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: #aaaab0;
+  opacity: 1;
+}
+
+/* Tools pills: accent text, restrained warm surface. */
+.tool-pills span {
+  color: var(--accent);
+}
+
+/* Real Work artwork supplied by Eduardo. */
+.work-visual-image {
+  background: #fff;
+  overflow: hidden;
+}
+.work-visual-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
