@@ -202,7 +202,51 @@
       </div>
     </section>
 
-    <section id="contact" class="future-block" aria-label="Contact section placeholder"></section>
+    <section class="contact-page" id="contact">
+      <div class="contact-wrap">
+        <div class="contact-intro reveal-block">
+          <p class="contact-kicker">CONTACT</p>
+          <h2 class="contact-title">Let’s talk.</h2>
+          <p class="contact-lede">Have a project, idea or opportunity in mind?<br>I’d love to hear about it.</p>
+        </div>
+
+        <form class="contact-form reveal-block" id="contact-form" action="https://formspree.io/f/xbjpzzwe" method="POST">
+          <label class="contact-field">
+            <span>FULL NAME</span>
+            <input type="text" name="name" autocomplete="name" placeholder="Your name" required>
+          </label>
+
+          <label class="contact-field">
+            <span>EMAIL ADDRESS</span>
+            <input type="email" name="email" autocomplete="email" placeholder="you@email.com" required>
+          </label>
+
+          <label class="contact-field contact-field-message">
+            <span>MESSAGE</span>
+            <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </label>
+
+          <button class="contact-submit" type="submit">
+            <span>SEND MESSAGE</span>
+            <span class="contact-submit-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="contact-status" id="contact-status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact-direct reveal-block">
+          <p class="contact-direct-label">OR REACH ME DIRECTLY</p>
+          <div class="contact-links">
+            <a href="mailto:eduardohjmnz@gmail.com">Email</a>
+            <a href="https://github.com/eduardojmnz" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+
+        <footer class="contact-footer reveal-block">
+          <div class="contact-footer-rule" aria-hidden="true"></div>
+          <p>Mexico City, MX<br>© 2026 Eduardo Jimenez</p>
+        </footer>
+      </div>
+    </section>
   </main>
   <script>
     const navLinks = [...document.querySelectorAll('.global-header .nav-link')];
@@ -414,7 +458,48 @@
       });
     }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
 
-    document.querySelectorAll('.work-page .reveal-block').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.work-page .reveal-block, .contact-page .reveal-block').forEach(el => revealObserver.observe(el));
+
+    const contactForm = document.getElementById('contact-form');
+    const contactStatus = document.getElementById('contact-status');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const submitButton = contactForm.querySelector('.contact-submit');
+        const originalLabel = submitButton?.querySelector('span')?.textContent || 'SEND MESSAGE';
+        const data = new FormData(contactForm);
+
+        if (contactStatus) contactStatus.textContent = 'Sending…';
+        if (submitButton) {
+          submitButton.disabled = true;
+          const label = submitButton.querySelector('span');
+          if (label) label.textContent = 'SENDING…';
+        }
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (!response.ok) throw new Error('Formspree submission failed');
+
+          contactForm.reset();
+          if (contactStatus) contactStatus.textContent = 'Thanks, your message was sent successfully.';
+        } catch (error) {
+          if (contactStatus) contactStatus.textContent = 'Something went wrong. Please try again or email me directly.';
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+            const label = submitButton.querySelector('span');
+            if (label) label.textContent = originalLabel;
+          }
+        }
+      });
+    }
 
     // Run the initial state only after every reveal target and observer exists.
     // This avoids a mobile-only initialization error that left Resume and Work hidden.
